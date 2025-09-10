@@ -19,7 +19,7 @@ async function loadCarNews() {
 function displayNews(articles) {
   newsContainer.innerHTML = "";
 
-  articles.slice(0,3).forEach(article => {
+  articles.slice(0,6).forEach(article => {
     const col = document.createElement("div");
     col.className = "col-md-4 mb-4";
 

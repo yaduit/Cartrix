@@ -90,10 +90,17 @@ body{
 }
 
 
-#myCarousel img {
+
+
+.carousel-item img {
+  height: 40vh;   
   object-fit: cover;
-  height: auto;
+  width: 100%;
 }
+
+
+
+
 
 .gradient-text {
        font-family:'Bebas Neue', sans-serif;
@@ -108,6 +115,11 @@ body{
 
 .footer{
        background-color: #0F0F0F;
+}
+
+.car-card img {
+      height: 200px;
+      object-fit: cover;
 }
 
      

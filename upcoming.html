@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+    
+  <style>
+        body {
+            background-color: #121212;
+            color: #f8f9fa;
+            padding-top: 30px;
+            padding-bottom: 50px;
+        }
+        .hero-section {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+        }
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+        .card {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        .card-img-top {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            height: 200px;
+            object-fit: cover;
+        }
+        .card-title {
+            color: #4ecdc4;
+            font-weight: 600;
+        }
+        .card-text {
+            color: #ccc;
+        }
+        .specs {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        .back-to-home {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+        .expected-date {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .card-body {
+            display: flex;
+            flex-direction: column;
+        }
+        .card-footer {
+            background-color: #252525;
+            border-top: 1px solid #333;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Back to Home Button -->
+    <a href="./index.html" class="back-to-home btn btn-outline-light">
+        <i class="fas fa-arrow-left me-2"></i>Back to Home
+    </a>
+
+    <!-- Hero Section -->
+    <div class="container hero-section">
+        <h1 class="hero-title">Coming Soon</h1>
+        <p class="hero-subtitle">Get ready for the most exciting upcoming car releases</p>
+    </div>
+
+    
+    <div class="container">
+        <div class="row" id="cars-container">
+            <!-- Loading Spinner -->
+            <div class="col-12 loading-spinner">
+                <div class="spinner-border text-light" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        
+        const upcomingCars = [
+            {
+                id: 1,
+                name: "Tesla Model S Plaid+",
+                image: "https://images.unsplash.com/photo-1560958089-b8a1929cea89?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                description: "The next generation of electric performance with unprecedented range and acceleration.",
+                specs: "1,100+ hp • 520+ mile range • 0-60 mph: <1.99s",
+                expected: "Q4 2023"
+            },
+            {
+                id: 2,
+                name: "Ford Mustang Mach-E GT",
+                image: "https://images.unsplash.com/photo-1603712610494-83b56aae2b4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                description: "High-performance electric SUV with Mustang styling and impressive capabilities.",
+                specs: "480 hp • 270 mile range • 0-60 mph: 3.5s",
+                expected: "Q1 2024"
+            },
+            {
+                id: 3,
+                name: "BMW i4",
+                image: "https://images.unsplash.com/photo-1621135802920-133df287f89c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                description: "BMW's first all-electric Gran Coupe with impressive range and performance.",
+                specs: "530 hp • 300 mile range • 0-60 mph: 4.0s",
+                expected: "Q2 2024"
+            },
+            {
+                id: 4,
+                name: "Audi Q4 e-tron",
+                image: "https://images.unsplash.com/photo-1593941707882-a5bba53377fe?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                description: "Compact electric SUV with Audi's signature luxury and technology features.",
+                specs: "295 hp • 250 mile range • 0-60 mph: 6.3s",
+                expected: "Q3 2024"
+            },
+            {
+                id: 5,
+                name: "Rivian R1T",
+                image: "https://images.unsplash.com/photo-1632967492345-3b6b6a6aebc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                description: "All-electric adventure vehicle with exceptional off-road capabilities.",
+                specs: "750 hp • 400+ mile range • 0-60 mph: 3.0s",
+                expected: "Q1 2024"
+            },
+            {
+                id: 6,
+                name: "Lucid Air",
+                image: "https://images.unsplash.com/photo-1638202993926-e5f81230d71d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                description: "Ultra-luxury electric sedan with industry-leading range and performance.",
+                specs: "1,080 hp • 517 mile range • 0-60 mph: 2.5s",
+                expected: "Q2 2024"
+            }
+        ];
+
+        
+        function displayCars(cars) {
+            const container = document.getElementById('cars-container');
+            container.innerHTML = ''; 
+            
+            cars.forEach(car => {
+                const col = document.createElement('div');
+                col.className = 'col-md-6 col-lg-4 mb-4';
+                
+                col.innerHTML = `
+                    <div class="card">
+                        <img src="${car.image}" class="card-img-top text-white p-2" alt="${car.name}">
+                        <div class="card-body">
+                            <span class="expected-date">Expected: ${car.expected}</span>
+                            <h5 class="card-title">${car.name}</h5>
+                            <p class="card-text">${car.description}</p>
+                            <p class="specs mt-auto"><i class="fas fa-tachometer-alt me-2"></i>${car.specs}</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Notify me when available</small>
+                            <button class="btn btn-sm btn-outline-light float-end">Notify</button>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(col);
+            });
+        }
+
+        // Simulate API fetch with a delay
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                displayCars(upcomingCars);
+            }, 1500); // Simulate network delay
+        });
+    </script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+</body>
+</html>
